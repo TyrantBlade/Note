@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">Note</string>
+    <string name="btVal">Ajouter</string>
+    <string name="listName">Liste de Fichiers</string>
+</resources>

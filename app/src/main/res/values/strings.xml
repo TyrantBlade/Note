@@ -2,4 +2,7 @@
     <string name="app_name">Note</string>
     <string name="btVal">Ajouter</string>
     <string name="listName">Liste de Fichiers</string>
+    <string name="noFile">No file to open</string>
+    <string name="saved">File saved</string>
+    <string name="crtFM">File created</string>
 </resources>

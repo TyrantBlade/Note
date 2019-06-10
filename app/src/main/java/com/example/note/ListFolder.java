@@ -28,7 +28,6 @@ public class ListFolder extends AppCompatActivity {
 
         toDelete= getIntent().getBooleanExtra(OPERATION,true);
 
-
         listView =findViewById(R.id.list);
         array = new ArrayList<String>();
 

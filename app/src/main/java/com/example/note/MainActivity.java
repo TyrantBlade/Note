@@ -80,7 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             writer.append(data);
             writer.flush();
             writer.close();
-            Toast.makeText(this, "Saved", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -98,7 +98,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 f_name.setText(fileName);
             }
             else{
-                Toast.makeText(this, "No file to open", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this,R.string.noFile, Toast.LENGTH_SHORT).show();
             }
         }
         else {
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             txView.setText("");
             writer.flush();
             writer.close();
-            Toast.makeText(context, name+" just created", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context,R.string.crtFM, Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
         }

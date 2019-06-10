@@ -1,18 +1,23 @@
 package com.example.note;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ListFolder extends AppCompatActivity {
+    public static final String RESULT_PATH_FILE="RESULT_PATH_FILE";
+    public static final String OPERATION="OPERATION";
+    public Boolean toDelete=false;
+
     List <String> array;
     ListView listView;
     private ArrayAdapter adapter;
@@ -21,6 +26,10 @@ public class ListFolder extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_folder);
+
+        Boolean op = getIntent().getBooleanExtra(OPERATION,true);
+        toDelete=op;
+
         listView =findViewById(R.id.list);
         array = new ArrayList<String>();
 
@@ -31,8 +40,12 @@ public class ListFolder extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String item = (String) listView.getItemAtPosition(position);
-                Log.d("Position : ", item);
-                adapter.remove(item);
+                if (!toDelete){
+                    returnPath(item);
+                }
+                else{
+                    adapter.remove(item);
+                }
             }
         });
     }
@@ -45,5 +58,11 @@ public class ListFolder extends AppCompatActivity {
         }
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, array);
         listView.setAdapter(adapter);
+    }
+    public void returnPath(String item){
+        Intent data=new Intent();
+        data.putExtra(RESULT_PATH_FILE,item);
+        setResult(RESULT_OK,data);
+        finish();
     }
 }

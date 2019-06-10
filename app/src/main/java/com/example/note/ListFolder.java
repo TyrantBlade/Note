@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,8 +26,8 @@ public class ListFolder extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_folder);
 
-        Boolean op = getIntent().getBooleanExtra(OPERATION,true);
-        toDelete=op;
+        toDelete= getIntent().getBooleanExtra(OPERATION,true);
+
 
         listView =findViewById(R.id.list);
         array = new ArrayList<String>();
@@ -44,6 +43,8 @@ public class ListFolder extends AppCompatActivity {
                     returnPath(item);
                 }
                 else{
+                    File file=new File(item);
+                    file.delete();
                     adapter.remove(item);
                 }
             }

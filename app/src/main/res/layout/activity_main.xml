@@ -6,13 +6,21 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity"
     android:padding="5dp">
-
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:id="@+id/file_name"
+        android:text="Notes"
+        android:layout_margin="2dp"
+        android:textColor="@color/frusji"/>
     <LinearLayout
         android:id="@+id/lin"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/linto"
-        android:background="@android:color/darker_gray">
+        android:background="@android:color/darker_gray"
+        android:layout_below="@+id/file_name">
 
         <EditText
             android:id="@+id/textAff"

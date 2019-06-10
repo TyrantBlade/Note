@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -21,22 +22,23 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private File root,gpxfile;
     private String filPath;
+    private static String fileName="default";
     FileWriter writer;
     FileReader reader;
     private EditText txView;
 
     private static final int REQUEST_CODE_PATH=1;
 
-    //
     private ImageView imNew,imOpen,imDel,imSave;
     private BufferedReader bufferedReader;
+    private TextView f_name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        txView=findViewById(R.id.textAff);
+        txView=findViewById(R.id.textAff);  f_name=findViewById(R.id.file_name);
 
         imNew=findViewById(R.id.newFile);       imOpen=findViewById(R.id.openFile);
         imDel=findViewById(R.id.delContent);    imSave=findViewById(R.id.saveFile);
@@ -44,7 +46,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         imOpen.setOnClickListener(this);     imNew.setOnClickListener(this);
         imDel.setOnClickListener(this);     imSave.setOnClickListener(this);
         if(gpxfile==null){
-            createFile(this,"default");
+            createFile(this,fileName);
+            f_name.setText(fileName);
         }
     }
 
@@ -56,7 +59,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         if (v==imNew){
-            createFile(this,txView.getText().toString());
+            fileName=txView.getText().toString();
+            createFile(this,fileName);
+            f_name.setText(fileName);
         }
         if (v==imOpen){
             Intent intent=new Intent(this,ListFolder.class);
@@ -89,6 +94,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 this.filPath=data.getStringExtra(ListFolder.RESULT_PATH_FILE);
 
                 txView.setText(readFile(filPath));
+                fileName=gpxfile.getAbsoluteFile().getName().replace(".txt","");
+                f_name.setText(fileName);
             }
             else{
                 Toast.makeText(this, "No file to open", Toast.LENGTH_SHORT).show();
@@ -105,10 +112,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if (!root.exists()) {
                 root.mkdirs();
             }
-            gpxfile = new File(root, name+".txt");
+            gpxfile = new File(root, name.replace(".txt","")+".txt");
             writer = new FileWriter(gpxfile);
-            writer.append("-.");
-            txView.setText("-.");
+            writer.append("");
+            txView.setText("");
             writer.flush();
             writer.close();
             Toast.makeText(context, name+" just created", Toast.LENGTH_SHORT).show();

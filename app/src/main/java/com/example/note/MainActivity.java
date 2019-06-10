@@ -22,7 +22,7 @@ import java.io.IOException;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
     private File root,gpxfile;
     private String filPath;
-    private static String fileName="default";
+    private String fileName="default";
     FileWriter writer;
     FileReader reader;
     private EditText txView;
@@ -32,11 +32,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private ImageView imNew,imOpen,imDel,imSave;
     private BufferedReader bufferedReader;
     private TextView f_name;
+    private static final  String BUNDLE_SAVE_FILE="BUNDLE_SAVE_FILE_PATH";
+    private static final  String BUNDLE_SAVE_FILE_NAME="BUNDLE_SAVE_FILE_NAME";
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString(BUNDLE_SAVE_FILE_NAME,this.fileName);
+        outState.putString(BUNDLE_SAVE_FILE,this.filPath);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         txView=findViewById(R.id.textAff);  f_name=findViewById(R.id.file_name);
 
@@ -45,6 +55,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         imOpen.setOnClickListener(this);     imNew.setOnClickListener(this);
         imDel.setOnClickListener(this);     imSave.setOnClickListener(this);
+
+        if(savedInstanceState!=null){
+            this.filPath=savedInstanceState.getString(BUNDLE_SAVE_FILE);
+            this.gpxfile=new File(filPath);
+            this.fileName=savedInstanceState.getString(BUNDLE_SAVE_FILE_NAME);
+            f_name.setText(fileName);
+        }
         if(gpxfile==null){
             createFile(this,fileName);
             f_name.setText(fileName);
@@ -118,7 +135,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             txView.setText("");
             writer.flush();
             writer.close();
-            Toast.makeText(context,R.string.crtFM, Toast.LENGTH_LONG).show();
+            this.fileName=gpxfile.getAbsoluteFile().getName().replace(".txt","");
+            this.filPath=gpxfile.getAbsolutePath();
+            Toast.makeText(context,R.string.saved, Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
         }

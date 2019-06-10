@@ -86,8 +86,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         if (requestCode==REQUEST_CODE_PATH){
             if (resultCode==RESULT_OK){
-                String path=data.getStringExtra(ListFolder.RESULT_PATH_FILE);
-                this.filPath=path;
+                this.filPath=data.getStringExtra(ListFolder.RESULT_PATH_FILE);
+
                 txView.setText(readFile(filPath));
             }
             else{
@@ -107,8 +107,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             gpxfile = new File(root, name+".txt");
             writer = new FileWriter(gpxfile);
-            writer.append("/-/------Default File------/-/");
-            txView.setText("/-/------Default File------/-/");
+            writer.append("-.");
+            txView.setText("-.");
             writer.flush();
             writer.close();
             Toast.makeText(context, name+" just created", Toast.LENGTH_SHORT).show();

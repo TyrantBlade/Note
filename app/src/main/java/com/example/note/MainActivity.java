@@ -137,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             writer.close();
             this.fileName=gpxfile.getAbsoluteFile().getName().replace(".txt","");
             this.filPath=gpxfile.getAbsolutePath();
-            Toast.makeText(context,R.string.saved, Toast.LENGTH_LONG).show();
+            Toast.makeText(context,R.string.crtFM, Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
         }

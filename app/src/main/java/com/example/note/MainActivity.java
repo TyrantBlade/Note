@@ -19,10 +19,10 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+public class MainActivity extends AppCompatActivity implements View.OnClickListener,NameDialog.DataDialog{
     private File root,gpxfile;
     private String filPath;
-    private String fileName="default";
+    private String fileName="";
     FileWriter writer;
     FileReader reader;
     private EditText txView;
@@ -62,9 +62,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             this.fileName=savedInstanceState.getString(BUNDLE_SAVE_FILE_NAME);
             f_name.setText(fileName);
         }
-        if(gpxfile==null){
-            createFile(this,fileName);
-            f_name.setText(fileName);
+        if(fileName.isEmpty()){
+            f_name.setText("");
         }
     }
 
@@ -76,9 +75,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         if (v==imNew){
-            fileName=txView.getText().toString();
-            createFile(this,fileName);
-            f_name.setText(fileName);
+            selectFileName();
         }
         if (v==imOpen){
             Intent intent=new Intent(this,ListFolder.class);
@@ -91,17 +88,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void saveFile(String data) {
-        try {
-            writer = new FileWriter(gpxfile);
-            writer.append(data);
-            writer.flush();
-            writer.close();
-            Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    private void selectFileName() {
+        NameDialog dialog=new NameDialog();
+        dialog.show(getSupportFragmentManager(),"");
+    }
 
+    private void saveFile(String data) {
+        if (!fileName.isEmpty()){
+            try {
+                writer = new FileWriter(gpxfile);
+                writer.append(data);
+                writer.flush();
+                writer.close();
+                Toast.makeText(this, R.string.saved, Toast.LENGTH_SHORT).show();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        else {
+            selectFileName();
+        }
     }
 
     @Override
@@ -135,8 +141,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             txView.setText("");
             writer.flush();
             writer.close();
-            this.fileName=gpxfile.getAbsoluteFile().getName().replace(".txt","");
-            this.filPath=gpxfile.getAbsolutePath();
             Toast.makeText(context,R.string.crtFM, Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -162,5 +166,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             e.printStackTrace();
         }
         return text.toString();
+    }
+
+    @Override
+    public void retrieveNameFile(String nameFile) {
+        if(nameFile.isEmpty()){
+            Toast.makeText(this,R.string.errFNmame, Toast.LENGTH_LONG).show();
+        }
+        else{
+            this.fileName=nameFile;
+            createFile(this,fileName);
+            f_name.setText(fileName);
+        }
     }
 }

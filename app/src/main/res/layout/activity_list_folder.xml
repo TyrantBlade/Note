@@ -5,9 +5,19 @@
     android:layout_height="match_parent"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".ListFolder">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:id="@+id/header_mess"
+        android:text="@string/header_listFichier"
+        android:background="@color/colorAccent"
+        android:padding="5dp"
+        android:textColor="@color/colorPrimaryDark"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/header_mess"
         android:id="@+id/list">
     </ListView>
 </RelativeLayout>

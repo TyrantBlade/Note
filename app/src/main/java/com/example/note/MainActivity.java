@@ -21,7 +21,7 @@ import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,NameDialog.DataDialog{
     private File root,gpxfile;
-    private String filPath;
+    private String filPath="";
     private String fileName="";
     FileWriter writer;
     FileReader reader;
@@ -58,9 +58,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(savedInstanceState!=null){
             this.filPath=savedInstanceState.getString(BUNDLE_SAVE_FILE);
-            this.gpxfile=new File(filPath);
             this.fileName=savedInstanceState.getString(BUNDLE_SAVE_FILE_NAME);
             f_name.setText(fileName);
+            if(fileName.isEmpty() || filPath.isEmpty()){
+
+            }
+            else {
+                this.gpxfile = new File(filPath);
+            }
         }
         if(fileName.isEmpty()){
             f_name.setText("");

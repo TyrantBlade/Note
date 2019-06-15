@@ -77,7 +77,9 @@ public class ListFolder extends AppCompatActivity {
         File[] files=root.listFiles();
         array.clear();
         for (File f: files){
-            array.add(f.getPath());
+            if(f.getPath().endsWith(".txt")){
+                array.add(f.getPath());
+            }
         }
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, android.R.id.text1, array);
         listView.setAdapter(adapter);

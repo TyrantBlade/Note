@@ -80,6 +80,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             startActivity(intent);
         }
         if (v==imNew){
+            txView.setText("");
             selectFileName();
         }
         if (v==imOpen){
@@ -134,7 +135,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    public void createFile(Context context, String name){
+    public void createFile(Context context, String name,String data){
         try {
             root = new File(Environment.getExternalStorageDirectory(), "Notes");
             if (!root.exists()) {
@@ -142,8 +143,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
             gpxfile = new File(root, name.replace(".txt","")+".txt");
             writer = new FileWriter(gpxfile);
-            writer.append("");
-            txView.setText("");
+            writer.append(data);
+            txView.setText(data);
             writer.flush();
             writer.close();
             Toast.makeText(context,R.string.crtFM, Toast.LENGTH_LONG).show();
@@ -180,7 +181,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else{
             this.fileName=nameFile;
-            createFile(this,fileName);
+            createFile(this,fileName,txView.getText().toString());
             f_name.setText(fileName);
         }
     }

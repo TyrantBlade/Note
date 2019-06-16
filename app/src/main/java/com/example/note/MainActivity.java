@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private File root,gpxfile;
     private String filPath="";
     private String fileName="";
+    private static long sayBackPress;
     FileWriter writer;
     FileReader reader;
     private EditText txView;
@@ -183,6 +184,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             this.fileName=nameFile;
             createFile(this,fileName,txView.getText().toString());
             f_name.setText(fileName);
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (sayBackPress + 2000 > System.currentTimeMillis()){
+            super.onBackPressed();
+        }
+        else{
+            Toast.makeText(MainActivity.this, R.string.confirmExit, Toast.LENGTH_SHORT).show();
+            sayBackPress = System.currentTimeMillis();
         }
     }
 }

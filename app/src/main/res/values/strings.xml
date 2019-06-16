@@ -12,4 +12,5 @@
     <string name="create">Create</string>
     <string name="errFNmame">File name is empty</string>
     <string name="header_listFichier">Files list</string>
+    <string name="confirmExit">Press once again to exit!</string>
 </resources>
